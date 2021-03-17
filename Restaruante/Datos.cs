@@ -31,7 +31,7 @@ namespace Restaruante
 
         private void Cerrar_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void Restaurar_Click(object sender, EventArgs e)
@@ -71,8 +71,9 @@ namespace Restaruante
             }
         }
 
-        private void bunifuFlatButton4_Click(object sender, EventArgs e)
+        private void Btn_Regresar_Click(object sender, EventArgs e)
         {
+            //this.Close();
         }
 
         private void MenuTop_MouseUp(object sender, MouseEventArgs e)
