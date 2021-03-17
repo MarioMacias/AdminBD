@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Restaruante
 {
-    public partial class Principal : Form
+    public partial class Datos : Form
     {
-        public Principal()
+        public Datos()
         {
             InitializeComponent();
         }
@@ -26,7 +26,7 @@ namespace Restaruante
 
         private void Minimizar_Click(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Minimized; 
+            WindowState = FormWindowState.Minimized;
         }
 
         private void Cerrar_Click(object sender, EventArgs e)
@@ -39,11 +39,6 @@ namespace Restaruante
             WindowState = FormWindowState.Normal;
             Maximizar.Visible = true;
             Restaurar.Visible = false;
-        }
-
-        private void Contenedor_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         bool mov;
@@ -71,16 +66,13 @@ namespace Restaruante
             else
             {
                 Menu.Width = 227;
-                //Contenedor.Width = 994;
                 Menu.Visible = false;
                 AnimacionAparecer.Show(Menu);
             }
         }
 
-        private void bunifuFlatButton5_Click(object sender, EventArgs e)
+        private void bunifuFlatButton4_Click(object sender, EventArgs e)
         {
-            Datos datos = new Datos();
-            datos.Show();
         }
 
         private void MenuTop_MouseUp(object sender, MouseEventArgs e)

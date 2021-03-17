@@ -21,3 +21,4 @@ C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaru
 C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaruante.csproj.CopyComplete
 C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaruante.exe
 C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaruante.pdb
+C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaruante.Datos.resources
