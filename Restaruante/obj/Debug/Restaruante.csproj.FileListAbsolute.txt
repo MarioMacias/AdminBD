@@ -22,3 +22,15 @@ C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaru
 C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaruante.exe
 C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaruante.pdb
 C:\Users\Mario\Google Drive\Semestre 10\DB\AdminBD\Restaruante\obj\Debug\Restaruante.Datos.resources
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\bin\Debug\Restaruante.exe.config
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\bin\Debug\Restaruante.exe
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\bin\Debug\Restaruante.pdb
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.csprojAssemblyReference.cache
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.Datos.resources
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.Principal.resources
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.Properties.Resources.resources
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.csproj.GenerateResource.cache
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.csproj.CoreCompileInputs.cache
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.csproj.CopyComplete
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.exe
+C:\Users\jacki\Documents\GitHub\AdminBD\Restaruante\obj\Debug\Restaruante.pdb

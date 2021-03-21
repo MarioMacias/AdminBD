@@ -1,20 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Drawing;
+using Bunifu.Framework.UI;
 using System.Windows.Forms;
 
 namespace Restaruante
 {
     public partial class Datos : Form
     {
+        private Controlador Controlador { get; set; }
+
+        private List<BunifuMaterialTextbox> Inputs { get; set; }
+
         public Datos()
         {
             InitializeComponent();
+            InicializaControlesAdicionales();
+        }
+
+        private void InicializaControlesAdicionales() 
+        {
+            Inputs = new List<BunifuMaterialTextbox>();
+            Controlador = new Controlador(new Empleado());
+            CargaModelo(Controlador.ModeloActual);
+        }
+
+        private void LimpiaControles()
+        {
+            dgv_Datos.Columns.Clear();
+            Inputs.ForEach((textBox) => panel_Empleado.Controls.Remove(textBox));
+            Inputs.Clear();
+        }
+
+        private void LlenaControles()
+        {
+            var punto = new Point(23, 7);
+            var aux = punto;
+            
+            for (int i = 1; i < dgv_Datos.Columns.Count && i < 5; i++)
+                CreaTextBox(dgv_Datos.Columns[i].Name, ref aux);
+
+            punto.X += 220;
+            aux = punto;
+
+            for (int i = 5; i < dgv_Datos.Columns.Count; i++)
+                CreaTextBox(dgv_Datos.Columns[i].Name, ref aux);
+        }
+
+        private void CreaTextBox(string nomCol, ref Point punto)
+        {
+            var textBox = new BunifuMaterialTextbox()
+            {
+                Location = punto,
+                Text = nomCol,
+                Size = new Size(187, 33),
+                LineFocusedColor = Color.MediumSeaGreen,
+                LineIdleColor = Color.SeaGreen,
+                LineMouseHoverColor = Color.MediumSeaGreen,
+                Font = new Font("Century Gothic", 9.75F),
+                ForeColor = Color.White
+            };
+
+            panel_Empleado.Controls.Add(textBox);
+            Inputs.Add(textBox);
+            punto.Y += 35;
+        }
+
+        private void CargaModelo(Modelo modelo)
+        {
+            LimpiaControles();
+
+            Controlador.ModeloActual = modelo;
+            dgv_Datos.DataSource = Controlador.TablaDeDatos();
+            LlenaControles();
         }
 
         private void Maximizar_Click(object sender, EventArgs e)
@@ -29,10 +88,7 @@ namespace Restaruante
             WindowState = FormWindowState.Minimized;
         }
 
-        private void Cerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void Cerrar_Click(object sender, EventArgs e) => Close();
 
         private void Restaurar_Click(object sender, EventArgs e)
         {
@@ -52,7 +108,7 @@ namespace Restaruante
 
         private void MenuTop_MouseMove(object sender, MouseEventArgs e)
         {
-            if (mov) this.SetDesktopLocation(MousePosition.X - movX, MousePosition.Y - movY);
+            if (mov) SetDesktopLocation(MousePosition.X - movX, MousePosition.Y - movY);
         }
 
         private void btn_Menu_Click(object sender, EventArgs e)
@@ -74,6 +130,29 @@ namespace Restaruante
         private void Btn_Regresar_Click(object sender, EventArgs e)
         {
             //this.Close();
+        }
+
+        private void BotonEmpleado_Click(object sender, EventArgs e) => CargaModelo(new Empleado());
+
+        private void BotonSucursal_Click(object sender, EventArgs e) => CargaModelo(new Sucursal());
+
+        private void BotonPlatillo_Click(object sender, EventArgs e) => CargaModelo(new Platillo());
+
+        private void BotonClientes_Click(object sender, EventArgs e) => CargaModelo(new Cliente());
+
+        private void BotonAgregar_Click(object sender, EventArgs e)
+        {
+            var valores = Inputs.Select(input => input.Text).ToArray();
+            Controlador.Agrega(valores);
+            CargaModelo(Controlador.ModeloActual);
+        }
+
+        private void dgv_Datos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int ren = dgv_Datos.CurrentCellAddress.Y;
+
+            for (int i = 0; i < Inputs.Count; i++)
+                Inputs[i].Text = dgv_Datos.Rows[ren].Cells[i + 1].Value.ToString();
         }
 
         private void MenuTop_MouseUp(object sender, MouseEventArgs e)
