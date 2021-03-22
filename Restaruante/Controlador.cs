@@ -12,7 +12,7 @@ namespace Restaruante
     {
         // Cadena de conexión del Mazacote.
         private static readonly string CADENA_CON = "Data Source=DESKTOP-7N21SII\\SQLEXPRESS;Initial Catalog=Restaurante;Integrated Security=True";
-
+        
         public SqlConnection Conexion { get; }
 
         public Modelo ModeloActual { get; set; }
@@ -33,6 +33,18 @@ namespace Restaruante
             empleado.Telefono = valores[4];
             empleado.Domicilio = valores[5];
             empleado.Email = valores[6];
+        }
+
+        private void NuevoPedido(Pedido pedido, string[] valores)
+        {
+            pedido.IdSucursal = long.Parse(valores[0]);
+            pedido.IdEmpleado = long.Parse(valores[1]);
+            pedido.IdCliente = long.Parse(valores[2]);
+            pedido.FechaPedido = valores[3];
+            pedido.HoraPedido = valores[4];
+            pedido.HoraDeseada = valores[5];
+            pedido.Comision = double.Parse(valores[6]);
+            pedido.Total = double.Parse(valores[7]);
         }
 
         private void NuevaSucursal(Sucursal sucursal, string[] valores) 
@@ -58,6 +70,20 @@ namespace Restaruante
             cliente.Email = valores[5];
         }
 
+        private void SeleccionaModelo(string[] valores)
+        {
+            if (ModeloActual is Empleado)
+                NuevoEmpleado(ModeloActual as Empleado, valores);
+            else if (ModeloActual is Pedido)
+                NuevoPedido(ModeloActual as Pedido, valores);
+            else if (ModeloActual is Sucursal)
+                NuevaSucursal(ModeloActual as Sucursal, valores);
+            else if (ModeloActual is Platillo)
+                NuevoPlatillo(ModeloActual as Platillo, valores);
+            else if (ModeloActual is Cliente)
+                NuevoCliente(ModeloActual as Cliente, valores);
+        }
+
         public bool ValidaDatos(string[] valores)
         {
             return valores.All(valor => valor.Length > 0);
@@ -65,16 +91,22 @@ namespace Restaruante
 
         public void Agrega(string[] valores)
         {
-            if (ModeloActual is Empleado)
-                NuevoEmpleado(ModeloActual as Empleado, valores);
-            else if (ModeloActual is Sucursal)
-                NuevaSucursal(ModeloActual as Sucursal, valores);
-            else if (ModeloActual is Platillo)
-                NuevoPlatillo(ModeloActual as Platillo, valores);
-            else if (ModeloActual is Cliente)
-                NuevoCliente(ModeloActual as Cliente, valores);
-
+            SeleccionaModelo(valores);
             ModeloActual.Inserta(Conexion);
+        }
+
+        public void Modifica(long id, string[] valores)
+        {
+            SeleccionaModelo(valores);
+            ModeloActual.Id = id;
+            ModeloActual.Modifica(Conexion);
+        }
+
+        public void Elimina(long id, string[] valores)
+        {
+            SeleccionaModelo(valores);
+            ModeloActual.Id = id;
+            ModeloActual.Elimina(Conexion);
         }
 
         public DataTable TablaDeDatos() => ModeloActual.Todos(Conexion);

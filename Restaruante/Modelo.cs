@@ -12,7 +12,7 @@ namespace Restaruante
     {
         protected string NomTabla { get; set; }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public abstract void Inserta(SqlConnection conexion);
 

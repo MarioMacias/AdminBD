@@ -39,73 +39,42 @@ namespace Restaruante
             NomTabla = "RESTAURANTBD.Cliente";
         }
 
-        public Cliente(long idZona, string nombre, string domicilio, string direccion, string telefono, string email) 
-        {
-            IdZona = idZona;
-            Nombre = nombre;
-            Domicilio = domicilio;
-            Direccion = direccion;
-            Telefono = telefono;
-            Email = email;
-        }
-
         public override void Inserta(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_INSERCION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_INSERCION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@idZona", IdZona);
-                    comando.Parameters.AddWithValue("@nombre", Nombre);
-                    comando.Parameters.AddWithValue("@domicilio", Domicilio);
-                    comando.Parameters.AddWithValue("@direccion", Direccion);
-                    comando.Parameters.AddWithValue("@telefono", Telefono);
-                    comando.Parameters.AddWithValue("@email", Email);
+                comando.Parameters.AddWithValue("@idZona", IdZona);
+                comando.Parameters.AddWithValue("@nombre", Nombre);
+                comando.Parameters.AddWithValue("@domicilio", Domicilio);
+                comando.Parameters.AddWithValue("@direccion", Direccion);
+                comando.Parameters.AddWithValue("@telefono", Telefono);
+                comando.Parameters.AddWithValue("@email", Email);
 
-                    Id = Convert.ToInt32(comando.ExecuteScalar());
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                Id = Convert.ToInt32(comando.ExecuteScalar());
             }
         }
         public override void Modifica(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_MODIFICACION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_MODIFICACION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@idCliente", Id);
-                    comando.Parameters.AddWithValue("@idZona", IdZona);
-                    comando.Parameters.AddWithValue("@nombre", Nombre);
-                    comando.Parameters.AddWithValue("@domicilio", Domicilio);
-                    comando.Parameters.AddWithValue("@direccion", Direccion);
-                    comando.Parameters.AddWithValue("@telefono", Telefono);
-                    comando.Parameters.AddWithValue("@email", Email);
+                comando.Parameters.AddWithValue("@idCliente", Id);
+                comando.Parameters.AddWithValue("@idZona", IdZona);
+                comando.Parameters.AddWithValue("@nombre", Nombre);
+                comando.Parameters.AddWithValue("@domicilio", Domicilio);
+                comando.Parameters.AddWithValue("@direccion", Direccion);
+                comando.Parameters.AddWithValue("@telefono", Telefono);
+                comando.Parameters.AddWithValue("@email", Email);
 
-                    Id = Convert.ToInt32(comando.ExecuteScalar());
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                Id = Convert.ToInt32(comando.ExecuteScalar());
             }
         }
 
         public override void Elimina(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_ELIMINACION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_ELIMINACION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@idCliente", Id);
-                    comando.ExecuteNonQuery();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                comando.Parameters.AddWithValue("@idCliente", Id);
+                comando.ExecuteNonQuery();
             }
         }
     }

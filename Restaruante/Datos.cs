@@ -134,18 +134,13 @@ namespace Restaruante
 
         private void BotonEmpleado_Click(object sender, EventArgs e) => CargaModelo(new Empleado());
 
+        private void BotonPedidos_Click(object sender, EventArgs e) => CargaModelo(new Pedido());
+
         private void BotonSucursal_Click(object sender, EventArgs e) => CargaModelo(new Sucursal());
 
         private void BotonPlatillo_Click(object sender, EventArgs e) => CargaModelo(new Platillo());
 
         private void BotonClientes_Click(object sender, EventArgs e) => CargaModelo(new Cliente());
-
-        private void BotonAgregar_Click(object sender, EventArgs e)
-        {
-            var valores = Inputs.Select(input => input.Text).ToArray();
-            Controlador.Agrega(valores);
-            CargaModelo(Controlador.ModeloActual);
-        }
 
         private void dgv_Datos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -153,6 +148,55 @@ namespace Restaruante
 
             for (int i = 0; i < Inputs.Count; i++)
                 Inputs[i].Text = dgv_Datos.Rows[ren].Cells[i + 1].Value.ToString();
+        }
+        private void BotonAgregar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var valores = Inputs.Select(input => input.Text).ToArray();
+                Controlador.Agrega(valores);
+                CargaModelo(Controlador.ModeloActual);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al insertar: " + ex.Message, "¡Ha ocurrido un error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BotonModificar_Click(object sender, EventArgs e)
+        {
+            if (dgv_Datos.CurrentCellAddress.Y == -1)
+                return;
+
+            try            
+            {
+                int ren = dgv_Datos.CurrentCellAddress.Y;
+                long id = long.Parse(dgv_Datos.Rows[ren].Cells[0].Value.ToString());
+                var valores = Inputs.Select(input => input.Text).ToArray();
+                Controlador.Modifica(id, valores);
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show("Ocurrió un error al modificar: " + ex.Message, "¡Ha ocurrido un error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BotonEliminar_Click(object sender, EventArgs e)
+        {
+            if (dgv_Datos.CurrentCellAddress.Y == -1)
+                return;
+
+            try
+            {
+                int ren = dgv_Datos.CurrentCellAddress.Y;
+                long id = long.Parse(dgv_Datos.Rows[ren].Cells[0].Value.ToString());
+                var valores = Inputs.Select(input => input.Text).ToArray();
+                Controlador.Elimina(id, valores);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al eliminar: " + ex.Message, "¡Ha ocurrido un error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void MenuTop_MouseUp(object sender, MouseEventArgs e)

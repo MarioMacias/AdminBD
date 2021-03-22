@@ -29,66 +29,37 @@ namespace Restaruante
             NomTabla = "RESTAURANTBD.platillo";
         }
 
-        public Platillo(string nombre, string descripcion, double costo)
-        {
-            NomTabla = "RESTAURANTBD.platillo";
-            Nombre = nombre;
-            Descripcion = descripcion;
-            Costo = costo;
-        }
-
         public override void Inserta(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_INSERCION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_INSERCION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@nombre", Nombre);
-                    comando.Parameters.AddWithValue("@descripcion", Descripcion);
-                    comando.Parameters.AddWithValue("@costo", Costo);
+                comando.Parameters.AddWithValue("@nombre", Nombre);
+                comando.Parameters.AddWithValue("@descripcion", Descripcion);
+                comando.Parameters.AddWithValue("@costo", Costo);
 
-                    Id = Convert.ToInt32(comando.ExecuteScalar());
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                Id = Convert.ToInt32(comando.ExecuteScalar());
             }
         }
 
         public override void Modifica(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_MODIFICACION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_MODIFICACION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@idPlatillo", Id);
-                    comando.Parameters.AddWithValue("@nombre", Nombre);
-                    comando.Parameters.AddWithValue("@descripcion", Descripcion);
-                    comando.Parameters.AddWithValue("@costo", Costo);
+                comando.Parameters.AddWithValue("@idPlatillo", Id);
+                comando.Parameters.AddWithValue("@nombre", Nombre);
+                comando.Parameters.AddWithValue("@descripcion", Descripcion);
+                comando.Parameters.AddWithValue("@costo", Costo);
 
-                    Id = Convert.ToInt32(comando.ExecuteScalar());
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                Id = Convert.ToInt32(comando.ExecuteScalar());
             }
         }
 
         public override void Elimina(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_ELIMINACION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_ELIMINACION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@idPlatillo", Id);
-                    comando.ExecuteNonQuery();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                comando.Parameters.AddWithValue("@idPlatillo", Id);
+                comando.ExecuteNonQuery();
             }
         }
     }

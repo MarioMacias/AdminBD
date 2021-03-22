@@ -27,60 +27,32 @@ namespace Restaruante
             NomTabla = "RESTAURANTBD.sucursal";
         }
 
-        public Sucursal(string nombre, string direccion)
-        {
-            NomTabla = "RESTAURANTBD.sucursal";
-            Nombre = nombre;
-            Direccion = direccion;
-        }
-
         public override void Inserta(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_INSERCION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_INSERCION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@nombre", Nombre);
-                    comando.Parameters.AddWithValue("@direccion", Direccion);
-                    Id = Convert.ToInt32(comando.ExecuteScalar());
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                comando.Parameters.AddWithValue("@nombre", Nombre);
+                comando.Parameters.AddWithValue("@direccion", Direccion);
+                Id = Convert.ToInt32(comando.ExecuteScalar());
             }
         }
 
         public override void Modifica(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_MODIFICACION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_MODIFICACION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@idSucursal", Id);
-                    comando.Parameters.AddWithValue("@nombre", Nombre);
-                    comando.Parameters.AddWithValue("@direccion", Direccion);
-                    comando.ExecuteNonQuery();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                comando.Parameters.AddWithValue("@idSucursal", Id);
+                comando.Parameters.AddWithValue("@nombre", Nombre);
+                comando.Parameters.AddWithValue("@direccion", Direccion);
+                comando.ExecuteNonQuery();
             }
         }
         public override void Elimina(SqlConnection conexion)
         {
-            try
+            using (var comando = new SqlCommand(COMANDO_ELIMINACION, conexion))
             {
-                using (var comando = new SqlCommand(COMANDO_ELIMINACION, conexion))
-                {
-                    comando.Parameters.AddWithValue("@idSucursal", Id);
-                    comando.ExecuteNonQuery();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                comando.Parameters.AddWithValue("@idSucursal", Id);
+                comando.ExecuteNonQuery();
             }
         }
     }
