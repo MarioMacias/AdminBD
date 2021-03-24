@@ -188,7 +188,8 @@ namespace Restaruante
                 int ren = dgv_Datos.CurrentCellAddress.Y;
                 long id = long.Parse(dgv_Datos.Rows[ren].Cells[0].Value.ToString());
                 var valores = Inputs.Select(input => input.Text).ToArray();
-                Controlador.Modifica(id, valores);
+                Controlador.Modifica(id, valores); 
+                CargaModelo(Controlador.ModeloActual);
             }
             catch (Exception ex) 
             {
@@ -207,6 +208,7 @@ namespace Restaruante
                 long id = long.Parse(dgv_Datos.Rows[ren].Cells[0].Value.ToString());
                 var valores = Inputs.Select(input => input.Text).ToArray();
                 Controlador.Elimina(id, valores);
+                CargaModelo(Controlador.ModeloActual);
             }
             catch (Exception ex)
             {
