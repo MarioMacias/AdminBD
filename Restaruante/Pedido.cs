@@ -41,6 +41,7 @@ namespace Restaruante
         public Pedido() 
         {
             NomTabla = "RESTAURANTBD.Pedido";
+            FIRST_PK = 1;
         }
 
         public override void Inserta(SqlConnection conexion)

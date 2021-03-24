@@ -11,8 +11,8 @@ namespace Restaruante
     class Controlador
     {
         // Cadena de conexión del Mazacote.
-        private static readonly string CADENA_CON = "Data Source=DESKTOP-7N21SII\\SQLEXPRESS;Initial Catalog=Restaurante;Integrated Security=True";
-        
+        //private static readonly string CADENA_CON = "Data Source=DESKTOP-7N21SII\\SQLEXPRESS;Initial Catalog=Restaurante;Integrated Security=True";
+        private static readonly string CADENA_CON = "Data Source=DESKTOP-ARRUD19\\SQLEXPRESS;Initial Catalog=restaurant;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public SqlConnection Conexion { get; }
 
         public Modelo ModeloActual { get; set; }
@@ -70,6 +70,26 @@ namespace Restaruante
             cliente.Email = valores[5];
         }
 
+        private void NuevoRepartidor(Repartidor repartidor, string[] valores)
+        {
+            repartidor.IdEmpleado = long.Parse(valores[0]);
+            repartidor.Pago = valores[1];
+        }
+
+        private void NuevoGerente(Gerente gerente, string[] valores)
+        {
+            gerente.IdEmpleado = long.Parse(valores[0]);
+            gerente.sueldoFijo = valores[1];
+        }
+
+        private void NuevoCocinero(Cocinero cocinero, string[] valores)
+        {
+            cocinero.IdEmpleado = long.Parse(valores[0]);
+            cocinero.CantidadPlatillos = valores[1];
+            cocinero.HorasContrato = valores[1];
+            cocinero.Pago = valores[1];
+        }
+
         private void SeleccionaModelo(string[] valores)
         {
             if (ModeloActual is Empleado)
@@ -82,6 +102,12 @@ namespace Restaruante
                 NuevoPlatillo(ModeloActual as Platillo, valores);
             else if (ModeloActual is Cliente)
                 NuevoCliente(ModeloActual as Cliente, valores);
+            else if (ModeloActual is Repartidor)
+                NuevoRepartidor(ModeloActual as Repartidor, valores);
+            else if (ModeloActual is Gerente)
+                NuevoGerente(ModeloActual as Gerente, valores);
+            else if (ModeloActual is Cocinero)
+                NuevoCocinero(ModeloActual as Cocinero, valores);
         }
 
         public bool ValidaDatos(string[] valores)

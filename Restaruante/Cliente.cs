@@ -10,16 +10,16 @@ namespace Restaruante
     class Cliente : Modelo
     {
         private static readonly string COMANDO_INSERCION =
-           "INSERT INTO RESTAURANTBD.cliente(idZona, nombre, domicilio, direccion, telefono, email) " +
+           "INSERT INTO RESTAURANTBD.Cliente(idZona, nombre, domicilio, direccion, telefono, email) " +
            "VALUES(@idZona, @nombre, @domicilio, @direccion, @telefono, @email)";
 
         private static readonly string COMANDO_MODIFICACION =
-            "UPDATE RESTAURANTBD.cliente " +
+            "UPDATE RESTAURANTBD.Cliente " +
             "SET idZona = @idZona, nombre = @nombre, domicilio = @domicilio, direccion = @direccion, telefono = @telefono, email = @email " +
             "WHERE idCliente = @idCliente";
 
         private static readonly string COMANDO_ELIMINACION =
-            "DELETE FROM RESTAURANTBD.cliente " +
+            "DELETE FROM RESTAURANTBD.Cliente " +
             "WHERE idCliente = @idCliente";
 
         public long IdZona { get; set; }
@@ -37,6 +37,7 @@ namespace Restaruante
         public Cliente() 
         {
             NomTabla = "RESTAURANTBD.Cliente";
+            FIRST_PK = 1;
         }
 
         public override void Inserta(SqlConnection conexion)

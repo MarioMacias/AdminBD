@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cliente.cs" />
+    <Compile Include="Cocinero.cs" />
     <Compile Include="Controlador.cs" />
     <Compile Include="Datos.cs">
       <SubType>Form</SubType>
@@ -60,6 +61,7 @@
       <DependentUpon>Datos.cs</DependentUpon>
     </Compile>
     <Compile Include="Empleado.cs" />
+    <Compile Include="Gerente.cs" />
     <Compile Include="Modelo.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Platillo.cs" />
@@ -71,6 +73,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repartidor.cs" />
     <Compile Include="Sucursal.cs" />
     <EmbeddedResource Include="Datos.resx">
       <DependentUpon>Datos.cs</DependentUpon>

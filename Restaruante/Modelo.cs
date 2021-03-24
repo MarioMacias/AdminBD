@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Restaruante
 {
@@ -13,6 +14,8 @@ namespace Restaruante
         protected string NomTabla { get; set; }
 
         public long Id { get; set; }
+
+        public int FIRST_PK { get; set; }
 
         public abstract void Inserta(SqlConnection conexion);
 
@@ -24,7 +27,6 @@ namespace Restaruante
         {
             var tabla = new DataTable();
             var set = new DataSet();
-
             using (var adaptador = new SqlDataAdapter("SELECT * FROM " + NomTabla, conexion))
             {
                 adaptador.Fill(tabla);

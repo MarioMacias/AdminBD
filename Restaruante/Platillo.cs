@@ -6,16 +6,16 @@ namespace Restaruante
     class Platillo : Modelo
     {
         private static readonly string COMANDO_INSERCION =
-            "INSERT INTO RESTAURANTBD.platillo(nombre, descripcion, costo) " +
+            "INSERT INTO RESTAURANTBD.Platillo(nombre, descripcion, costo) " +
             "VALUES(@nombre, @descripcion, @costo)";
 
         private static readonly string COMANDO_MODIFICACION =
-            "UPDATE RESTAURANTBD.platillo " +
+            "UPDATE RESTAURANTBD.Platillo " +
             "SET nombre = @nombre, descripcion = @descripcion, costo = @costo " +
             "WHERE idPlatillo = @idPlatillo";
 
         private static readonly string COMANDO_ELIMINACION =
-            "DELETE FROM RESTAURANTBD.platillo " +
+            "DELETE FROM RESTAURANTBD.Platillo " +
             "WHERE idPlatillo = @idPlatillo";
 
         public string Nombre { get; set; }
@@ -26,7 +26,8 @@ namespace Restaruante
 
         public Platillo()
         {
-            NomTabla = "RESTAURANTBD.platillo";
+            NomTabla = "RESTAURANTBD.Platillo";
+            FIRST_PK = 1;
         }
 
         public override void Inserta(SqlConnection conexion)

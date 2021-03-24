@@ -11,6 +11,8 @@ namespace Restaruante
     {
         private Controlador Controlador { get; set; }
 
+        private int FIRST_PK {get; set;}
+
         private List<BunifuMaterialTextbox> Inputs { get; set; }
 
         public Datos()
@@ -38,7 +40,7 @@ namespace Restaruante
             var punto = new Point(23, 7);
             var aux = punto;
             
-            for (int i = 1; i < dgv_Datos.Columns.Count && i < 5; i++)
+            for (int i = FIRST_PK; i < dgv_Datos.Columns.Count && i < 5; i++)
                 CreaTextBox(dgv_Datos.Columns[i].Name, ref aux);
 
             punto.X += 220;
@@ -61,7 +63,6 @@ namespace Restaruante
                 Font = new Font("Century Gothic", 9.75F),
                 ForeColor = Color.White
             };
-
             panel_Empleado.Controls.Add(textBox);
             Inputs.Add(textBox);
             punto.Y += 35;
@@ -71,6 +72,7 @@ namespace Restaruante
         {
             LimpiaControles();
 
+            FIRST_PK = modelo.FIRST_PK;
             Controlador.ModeloActual = modelo;
             dgv_Datos.DataSource = Controlador.TablaDeDatos();
             LlenaControles();
@@ -134,6 +136,12 @@ namespace Restaruante
 
         private void BotonEmpleado_Click(object sender, EventArgs e) => CargaModelo(new Empleado());
 
+        private void btn_repartidor_Click(object sender, EventArgs e) => CargaModelo(new Repartidor());
+        
+        private void btn_gerente_Click(object sender, EventArgs e) => CargaModelo(new Gerente());
+
+        private void btn_cocinero_Click(object sender, EventArgs e) => CargaModelo(new Cocinero());
+
         private void BotonPedidos_Click(object sender, EventArgs e) => CargaModelo(new Pedido());
 
         private void BotonSucursal_Click(object sender, EventArgs e) => CargaModelo(new Sucursal());
@@ -144,10 +152,17 @@ namespace Restaruante
 
         private void dgv_Datos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int ren = dgv_Datos.CurrentCellAddress.Y;
+            try
+            {
+                int ren = dgv_Datos.CurrentCellAddress.Y;
 
-            for (int i = 0; i < Inputs.Count; i++)
-                Inputs[i].Text = dgv_Datos.Rows[ren].Cells[i + 1].Value.ToString();
+                for (int i = 0; i < Inputs.Count; i++)
+                    Inputs[i].Text = dgv_Datos.Rows[ren].Cells[i + FIRST_PK].Value.ToString();
+            }
+            catch (Exception exe)
+            {
+                MessageBox.Show("Solo una celda");
+            }
         }
         private void BotonAgregar_Click(object sender, EventArgs e)
         {
@@ -197,6 +212,11 @@ namespace Restaruante
             {
                 MessageBox.Show("Ocurrió un error al eliminar: " + ex.Message, "¡Ha ocurrido un error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void MenuTop_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         private void MenuTop_MouseUp(object sender, MouseEventArgs e)
