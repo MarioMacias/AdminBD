@@ -60,6 +60,7 @@
     <Compile Include="Datos.Designer.cs">
       <DependentUpon>Datos.cs</DependentUpon>
     </Compile>
+    <Compile Include="DetallePedido.cs" />
     <Compile Include="Empleado.cs" />
     <Compile Include="Gerente.cs" />
     <Compile Include="Modelo.cs" />

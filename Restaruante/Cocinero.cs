@@ -11,11 +11,11 @@ namespace Restaruante
     {
         private static readonly string COMANDO_INSERCION =
             "INSERT INTO RESTAURANTBD.Cocinero(idEmpleado, cantidadPlatillos, horasContrato, pago) " +
-            "VALUES(@idEmpleado, @cantidadPlatillos, @horasContrato ,@pago)";
+            "VALUES(@idEmpleado, @cantidadPlatillos, @horasContrato, @pago)";
 
         private static readonly string COMANDO_MODIFICACION =
             "UPDATE RESTAURANTBD.Cocinero " +
-            "SET idEmpleado = @idEmpleado, cantidadPlatillos = @cantidadPlatillos, horasContrato = @horasContrato, pago = @pago" +
+            "SET idEmpleado = @idEmpleado, cantidadPlatillos = @cantidadPlatillos, horasContrato = @horasContrato, pago = @pago " +
             "WHERE idEmpleado = @idEmpleado";
 
         private static readonly string COMANDO_ELIMINACION =
@@ -56,7 +56,7 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idEmpleado", Id);
                 comando.Parameters.AddWithValue("@cantidadPlatillos", CantidadPlatillos);
                 comando.Parameters.AddWithValue("@horasContrato", HorasContrato);
-                comando.Parameters.AddWithValue("@idSucursal", Pago);
+                comando.Parameters.AddWithValue("@pago", Pago);
                 comando.ExecuteNonQuery();
             }
         }

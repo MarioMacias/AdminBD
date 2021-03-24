@@ -143,6 +143,8 @@ namespace Restaruante
         private void btn_cocinero_Click(object sender, EventArgs e) => CargaModelo(new Cocinero());
 
         private void BotonPedidos_Click(object sender, EventArgs e) => CargaModelo(new Pedido());
+        
+        private void btn_detalles_Click(object sender, EventArgs e) => CargaModelo(new DetallePedido());
 
         private void BotonSucursal_Click(object sender, EventArgs e) => CargaModelo(new Sucursal());
 
@@ -188,6 +190,7 @@ namespace Restaruante
                 int ren = dgv_Datos.CurrentCellAddress.Y;
                 long id = long.Parse(dgv_Datos.Rows[ren].Cells[0].Value.ToString());
                 var valores = Inputs.Select(input => input.Text).ToArray();
+
                 Controlador.Modifica(id, valores); 
                 CargaModelo(Controlador.ModeloActual);
             }

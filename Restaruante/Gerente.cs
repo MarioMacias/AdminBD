@@ -48,7 +48,7 @@ namespace Restaruante
             using (var comando = new SqlCommand(COMANDO_MODIFICACION, conexion))
             {
                 comando.Parameters.AddWithValue("@idEmpleado", Id);
-                comando.Parameters.AddWithValue("@idSucursal", sueldoFijo);
+                comando.Parameters.AddWithValue("@sueldoFijo", sueldoFijo);
                 comando.ExecuteNonQuery();
             }
         }
