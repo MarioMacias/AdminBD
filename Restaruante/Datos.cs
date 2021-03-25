@@ -151,6 +151,7 @@ namespace Restaruante
         private void BotonPlatillo_Click(object sender, EventArgs e) => CargaModelo(new Platillo());
 
         private void BotonClientes_Click(object sender, EventArgs e) => CargaModelo(new Cliente());
+        private void btn_zona_Click(object sender, EventArgs e) => CargaModelo(new ZonaDomicilio());
 
         private void dgv_Datos_CellClick(object sender, DataGridViewCellEventArgs e)
         {

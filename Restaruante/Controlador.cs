@@ -87,7 +87,7 @@ namespace Restaruante
             cocinero.IdEmpleado = long.Parse(valores[0]);
             cocinero.CantidadPlatillos = valores[1];
             cocinero.HorasContrato = valores[2];
-            cocinero.Pago = valores[3];
+            cocinero.Pago = double.Parse(valores[3]);
         }
 
         private void NuevoDetallePedido(DetallePedido detallePedido, string[] valores)
@@ -95,7 +95,14 @@ namespace Restaruante
             detallePedido.IdPedido = long.Parse(valores[0]);
             detallePedido.IdPlatillo = long.Parse(valores[1]);
             detallePedido.CantidadProductos = valores[2];
-            detallePedido.Subtotal = valores[3];
+            detallePedido.Subtotal = double.Parse(valores[3]);
+        }
+
+        private void NuevoZonaDomicilio(ZonaDomicilio zonaDomicilio, string[] valores)
+        {
+            zonaDomicilio.Nombre = valores[0];
+            zonaDomicilio.CodigoPostal = valores[1];
+            zonaDomicilio.ComisionCobro = double.Parse(valores[2]);
         }
 
         private void SeleccionaModelo(string[] valores)
@@ -118,6 +125,8 @@ namespace Restaruante
                 NuevoCocinero(ModeloActual as Cocinero, valores);
             else if (ModeloActual is Cocinero)
                 NuevoDetallePedido(ModeloActual as DetallePedido, valores);
+            else if (ModeloActual is ZonaDomicilio)
+                NuevoZonaDomicilio(ModeloActual as ZonaDomicilio, valores);
         }
 
         public bool ValidaDatos(string[] valores)

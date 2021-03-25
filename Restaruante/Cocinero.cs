@@ -28,7 +28,7 @@ namespace Restaruante
 
         public string HorasContrato { get; set; }
 
-        public string Pago { get; set; }
+        public double Pago { get; set; }
 
         public Cocinero()
         {

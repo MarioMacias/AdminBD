@@ -28,7 +28,7 @@ namespace Restaruante
 
         public string CantidadProductos { get; set; }
 
-        public string Subtotal { get; set; }
+        public double Subtotal { get; set; }
 
         public DetallePedido()
         {
