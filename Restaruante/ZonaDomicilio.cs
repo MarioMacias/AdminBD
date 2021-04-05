@@ -33,6 +33,7 @@ namespace Restaruante
 
         public ZonaDomicilio()
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.ZonaDomicilio";
             FIRST_PK = 1;
         }

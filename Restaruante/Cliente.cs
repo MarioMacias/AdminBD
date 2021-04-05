@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,13 @@ namespace Restaruante
             "DELETE FROM RESTAURANTBD.Cliente " +
             "WHERE idCliente = @idCliente";
 
+        private static readonly string TODOS =
+            "SELECT idCliente, RESTAURANTBD.Cliente.idZona, " +
+            "CONCAT(RESTAURANTBD.ZonaDomicilio.idZona, ' - ', RESTAURANTBD.ZonaDomicilio.nombre, ' - ', RESTAURANTBD.ZonaDomicilio.codigoPostal) AS Zona, " +
+            "RESTAURANTBD.Cliente.nombre, domicilio, direccion, telefono, email " +
+            "FROM RESTAURANTBD.Cliente INNER JOIN RESTAURANTBD.ZonaDomicilio " +
+            "ON RESTAURANTBD.Cliente.idZona = RESTAURANTBD.ZonaDomicilio.idZona";
+
         public long IdZona { get; set; }
 
         public string Nombre { get; set; }
@@ -36,6 +44,7 @@ namespace Restaruante
 
         public Cliente() 
         {
+            Ocultas = new string[] { "idZona" };
             NomTabla = "RESTAURANTBD.Cliente";
             FIRST_PK = 1;
         }
@@ -77,6 +86,17 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idCliente", Id);
                 comando.ExecuteNonQuery();
             }
+        }
+
+        public override DataTable Todos(SqlConnection conexion)
+        {
+            var tabla = new DataTable();
+            using (var adaptador = new SqlDataAdapter(TODOS, conexion))
+            {
+                adaptador.Fill(tabla);
+            }
+
+            return tabla;
         }
     }
 }

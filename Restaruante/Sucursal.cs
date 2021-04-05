@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Restaruante
@@ -24,6 +25,7 @@ namespace Restaruante
 
         public Sucursal() 
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.Sucursal";
             FIRST_PK = 1;
         }

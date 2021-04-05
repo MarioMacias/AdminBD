@@ -32,6 +32,7 @@ namespace Restaruante
 
         public Cocinero()
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.Cocinero";
             FIRST_PK = 0;
         }

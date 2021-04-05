@@ -39,9 +39,14 @@ namespace Restaruante
         {
             var punto = new Point(23, 7);
             var aux = punto;
-            
+
             for (int i = FIRST_PK; i < dgv_Datos.Columns.Count && i < 5; i++)
+            {
                 CreaTextBox(dgv_Datos.Columns[i].Name, ref aux);
+
+                if (!dgv_Datos.Columns[i].Visible)
+                    i++;
+            }
 
             punto.X += 220;
             aux = punto;
@@ -75,6 +80,10 @@ namespace Restaruante
             FIRST_PK = modelo.FIRST_PK;
             Controlador.ModeloActual = modelo;
             dgv_Datos.DataSource = Controlador.TablaDeDatos();
+
+            foreach (var columna in Controlador.ModeloActual.Ocultas)
+                dgv_Datos.Columns[columna].Visible = false;
+
             LlenaControles();
         }
 
@@ -151,6 +160,7 @@ namespace Restaruante
         private void BotonPlatillo_Click(object sender, EventArgs e) => CargaModelo(new Platillo());
 
         private void BotonClientes_Click(object sender, EventArgs e) => CargaModelo(new Cliente());
+
         private void btn_zona_Click(object sender, EventArgs e) => CargaModelo(new ZonaDomicilio());
 
         private void dgv_Datos_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -158,9 +168,13 @@ namespace Restaruante
             try
             {
                 int ren = dgv_Datos.CurrentCellAddress.Y;
+                int j = FIRST_PK;
 
                 for (int i = 0; i < Inputs.Count; i++)
-                    Inputs[i].Text = dgv_Datos.Rows[ren].Cells[i + FIRST_PK].Value.ToString();
+                {
+                    Inputs[i].Text = dgv_Datos.Rows[ren].Cells[j].Value.ToString();
+                    j += !dgv_Datos.Columns[j].Visible ? 2 : 1;
+                }
             }
             catch (Exception exe)
             {

@@ -40,6 +40,7 @@ namespace Restaruante
 
         public Pedido() 
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.Pedido";
             FIRST_PK = 1;
         }

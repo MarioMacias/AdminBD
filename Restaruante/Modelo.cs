@@ -13,6 +13,8 @@ namespace Restaruante
     {
         protected string NomTabla { get; set; }
 
+        public string[] Ocultas { get; protected set; }
+
         public long Id { get; set; }
 
         public int FIRST_PK { get; set; }
@@ -23,7 +25,7 @@ namespace Restaruante
 
         public abstract void Elimina(SqlConnection conexion);
 
-        public DataTable Todos(SqlConnection conexion)
+        public virtual DataTable Todos(SqlConnection conexion)
         {
             var tabla = new DataTable();
             var set = new DataSet();

@@ -26,6 +26,7 @@ namespace Restaruante
 
         public Platillo()
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.Platillo";
             FIRST_PK = 1;
         }

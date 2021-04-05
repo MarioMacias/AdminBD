@@ -32,6 +32,7 @@ namespace Restaruante
 
         public DetallePedido()
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.DetallePedido";
             FIRST_PK = 0;
         }

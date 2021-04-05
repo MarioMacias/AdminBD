@@ -29,6 +29,7 @@ namespace Restaruante
 
         public Repartidor()
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.Repartidor";
             FIRST_PK = 0;
         }

@@ -28,6 +28,7 @@ namespace Restaruante
 
         public Gerente()
         {
+            Ocultas = new string[] { };
             NomTabla = "RESTAURANTBD.Gerente";
             FIRST_PK = 0;
         }
