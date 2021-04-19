@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -23,13 +24,22 @@ namespace Restaruante
             "DELETE RESTAURANTBD.Repartidor " +
             "WHERE idEmpleado = @idEmpleado";
 
+        private static readonly string TODOS =
+            "SELECT CONCAT(RESTAURANTBD.Empleado.idEmpleado, ' - ', RESTAURANTBD.Sucursal.idSucursal, ' - ', RESTAURANTBD.Sucursal.nombre) AS idEmpleado, " +
+            "pago " +
+            "FROM RESTAURANTBD.Repartidor"+
+            " INNER JOIN RESTAURANTBD.Empleado " +
+            "ON RESTAURANTBD.Repartidor.idEmpleado = RESTAURANTBD.Empleado.idEmpleado" +
+            " INNER JOIN RESTAURANTBD.Sucursal " +
+            "ON RESTAURANTBD.Empleado.idSucursal = RESTAURANTBD.Sucursal.idSucursal";
+
         public long IdEmpleado{ get; set; }
 
         public string Pago { get; set; }
 
         public Repartidor()
         {
-            Ocultas = new string[] { };
+            Ocultas = new string[] {  };
             NomTabla = "RESTAURANTBD.Repartidor";
             FIRST_PK = 0;
         }
@@ -62,6 +72,17 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idEmpleado", Id);
                 comando.ExecuteNonQuery();
             }
+        }
+
+        public override DataTable Todos(SqlConnection conexion)
+        {
+            var tabla = new DataTable();
+            using (var adaptador = new SqlDataAdapter(TODOS, conexion))
+            {
+                adaptador.Fill(tabla);
+            }
+
+            return tabla;
         }
     }
 }

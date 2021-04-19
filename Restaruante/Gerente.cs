@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Restaruante
 {
@@ -21,6 +22,15 @@ namespace Restaruante
         private static readonly string COMANDO_ELIMINACION =
             "DELETE RESTAURANTBD.Gerente " +
             "WHERE idEmpleado = @idEmpleado";
+
+        private static readonly string TODOS =
+            "SELECT CONCAT(RESTAURANTBD.Empleado.idEmpleado, ' - ', RESTAURANTBD.Sucursal.idSucursal, ' - ', RESTAURANTBD.Sucursal.nombre) AS idEmpleado, " +
+            "sueldoFijo " +
+            "FROM RESTAURANTBD.Gerente" +
+            " INNER JOIN RESTAURANTBD.Empleado " +
+            "ON RESTAURANTBD.Gerente.idEmpleado = RESTAURANTBD.Empleado.idEmpleado" +
+            " INNER JOIN RESTAURANTBD.Sucursal " +
+            "ON RESTAURANTBD.Empleado.idSucursal = RESTAURANTBD.Sucursal.idSucursal";
 
         public long IdEmpleado { get; set; }
 
@@ -61,6 +71,17 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idEmpleado", Id);
                 comando.ExecuteNonQuery();
             }
+        }
+
+        public override DataTable Todos(SqlConnection conexion)
+        {
+            var tabla = new DataTable();
+            using (var adaptador = new SqlDataAdapter(TODOS, conexion))
+            {
+                adaptador.Fill(tabla);
+            }
+
+            return tabla;
         }
     }
 }

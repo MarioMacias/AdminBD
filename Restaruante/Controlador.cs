@@ -11,8 +11,8 @@ namespace Restaruante
     class Controlador
     {
         // Cadena de conexión del Mazacote.
-        private static readonly string CADENA_CON = "Data Source=DESKTOP-7N21SII\\SQLEXPRESS;Initial Catalog=restaurant;Integrated Security=True";
-        // private static readonly string CADENA_CON = "Data Source=DESKTOP-ARRUD19\\SQLEXPRESS;Initial Catalog=restaurant;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+       // private static readonly string CADENA_CON = "Data Source=DESKTOP-7N21SII\\SQLEXPRESS;Initial Catalog=restaurant;Integrated Security=True";
+         private static readonly string CADENA_CON = "Data Source=DESKTOP-ARRUD19\\SQLEXPRESS;Initial Catalog=restaurant;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public SqlConnection Conexion { get; }
 
         public Modelo ModeloActual { get; set; }
