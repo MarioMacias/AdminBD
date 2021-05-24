@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace Restaruante
 {
@@ -21,6 +18,17 @@ namespace Restaruante
         private static readonly string COMANDO_ELIMINACION =
             "DELETE FROM RESTAURANTBD.Pedido " +
             "WHERE idPedido = @idPedido";
+
+        private static readonly string TODOS =
+            "SELECT idPedido, RESTAURANTBD.Pedido.idSucursal, " +
+            "CONCAT(RESTAURANTBD.Pedido.idSucursal, ' - ', RESTAURANTBD.Sucursal.nombre) AS Sucursal, RESTAURANTBD.Pedido.idEmpleado," +
+            "CONCAT(RESTAURANTBD.Pedido.idEmpleado, ' - ', RESTAURANTBD.Empleado.idSucursal, ' - ', RESTAURANTBD.Empleado.Nombre) AS Empleado, RESTAURANTBD.Pedido.idCliente," +
+            "CONCAT(RESTAURANTBD.Pedido.idCliente, ' - ', RESTAURANTBD.Cliente.nombre, ' - ', RESTAURANTBD.Cliente.idZona) AS Cliente," +
+            "fechaPedido, horaPedido, horaDeseada, comision, total " +
+            "FROM RESTAURANTBD.Pedido " +
+            "INNER JOIN RESTAURANTBD.Sucursal ON RESTAURANTBD.Pedido.idSucursal = RESTAURANTBD.Sucursal.idSucursal " +
+            "INNER JOIN RESTAURANTBD.Empleado ON RESTAURANTBD.Pedido.idEmpleado = RESTAURANTBD.Empleado.idEmpleado " +
+            "INNER JOIN RESTAURANTBD.Cliente ON RESTAURANTBD.Pedido.idCliente = RESTAURANTBD.Cliente.idCliente ";
 
         public long IdSucursal { get; set; }
         
@@ -40,7 +48,7 @@ namespace Restaruante
 
         public Pedido() 
         {
-            Ocultas = new string[] { };
+            Ocultas = new string[] { "idSucursal", "idEmpleado", "idCliente" };
             NomTabla = "RESTAURANTBD.Pedido";
             FIRST_PK = 1;
         }
@@ -86,6 +94,17 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idPedido", Id);
                 comando.ExecuteNonQuery();
             }
+        }
+
+        public override DataTable Todos(SqlConnection conexion)
+        {
+            var tabla = new DataTable();
+            using (var adaptador = new SqlDataAdapter(TODOS, conexion))
+            {
+                adaptador.Fill(tabla);
+            }
+
+            return tabla;
         }
     }
 }

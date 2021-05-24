@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Restaruante
 {
@@ -22,6 +23,12 @@ namespace Restaruante
             "DELETE RESTAURANTBD.DetallePedido " +
             "WHERE idPedido = @idPedido AND idPlatillo = @idPlatillo";
 
+        private static readonly string TODOS = "" +
+            "SELECT idPedido, RESTAURANTBD.DetallePedido.idPlatillo," +
+            "CONCAT(RESTAURANTBD.DetallePedido.idPlatillo, ' - ', RESTAURANTBD.Platillo.descripcion) AS Platillo," +
+            "cantidadProductos, subtotal FROM RESTAURANTBD.DetallePedido " +
+            "INNER JOIN RESTAURANTBD.Platillo ON RESTAURANTBD.DetallePedido.idPlatillo = RESTAURANTBD.Platillo.idPlatillo";
+
         public long IdPedido { get; set; }
 
         public long IdPlatillo { get; set; }
@@ -32,7 +39,7 @@ namespace Restaruante
 
         public DetallePedido()
         {
-            Ocultas = new string[] { };
+            Ocultas = new string[] { "idPlatillo" };
             NomTabla = "RESTAURANTBD.DetallePedido";
             FIRST_PK = 0;
         }
@@ -44,7 +51,7 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idPedido", IdPedido);
                 comando.Parameters.AddWithValue("@idPlatillo", IdPlatillo);
                 comando.Parameters.AddWithValue("@cantidadProductos", CantidadProductos);
-                comando.Parameters.AddWithValue("@pago", Subtotal);
+                comando.Parameters.AddWithValue("@subtotal", Subtotal);
 
                 Id = Convert.ToInt32(comando.ExecuteScalar());
             }
@@ -57,7 +64,7 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idPedido", IdPedido);
                 comando.Parameters.AddWithValue("@idPlatillo", IdPlatillo);
                 comando.Parameters.AddWithValue("@cantidadProductos", CantidadProductos);
-                comando.Parameters.AddWithValue("@pago", Subtotal);
+                comando.Parameters.AddWithValue("@subtotal", Subtotal);
                 comando.ExecuteNonQuery();
             }
         }
@@ -70,6 +77,17 @@ namespace Restaruante
                 comando.Parameters.AddWithValue("@idPlatillo", IdPlatillo);
                 comando.ExecuteNonQuery();
             }
+        }
+
+        public override DataTable Todos(SqlConnection conexion)
+        {
+            var tabla = new DataTable();
+            using (var adaptador = new SqlDataAdapter(TODOS, conexion))
+            {
+                adaptador.Fill(tabla);
+            }
+
+            return tabla;
         }
     }
 }

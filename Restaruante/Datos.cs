@@ -7,20 +7,35 @@ using System.Windows.Forms;
 
 namespace Restaruante
 {
+    /**
+     * Formulario para la inserción, modificación y eliminación de los 
+     * datos de la base de datos de RESTAURANTBD.
+     */
     public partial class Datos : Form
     {
+        // Controlador que gestiona los valores proporcionados
+        // por cada formulario
         private Controlador Controlador { get; set; }
 
+        // La llave primaria del primer atributo
         private int FIRST_PK {get; set;}
 
+        // Textboxes dinámicos para cada campo que requiera el
+        // formulario
         private List<BunifuMaterialTextbox> Inputs { get; set; }
 
+        /**
+         * Construye el formulario e inicializa sus controles respectivos.
+         */
         public Datos()
         {
             InitializeComponent();
             InicializaControlesAdicionales();
         }
 
+        /**
+         * Inicializa los controles adicionales que maneja el formulario. 
+         */
         private void InicializaControlesAdicionales() 
         {
             Inputs = new List<BunifuMaterialTextbox>();
@@ -28,6 +43,9 @@ namespace Restaruante
             CargaModelo(Controlador.ModeloActual);
         }
 
+        /**
+         * Limpia los controles del formulario.
+         */
         private void LimpiaControles()
         {
             dgv_Datos.Columns.Clear();
@@ -35,11 +53,18 @@ namespace Restaruante
             Inputs.Clear();
         }
 
+        /**
+         * Llena los controles del formulario.
+         */
         private void LlenaControles()
         {
+            // Punto de referencia para colocar los textbox
             var punto = new Point(23, 7);
+
+            // Punto auxiliar.
             var aux = punto;
 
+            // Llena 5 filas en la primer columna.
             for (int i = FIRST_PK; i < dgv_Datos.Columns.Count && i < 5; i++)
             {
                 CreaTextBox(dgv_Datos.Columns[i].Name, ref aux);
@@ -51,10 +76,19 @@ namespace Restaruante
             punto.X += 220;
             aux = punto;
 
+            // Llena hasta 5 filas en la segunda columna.
             for (int i = 5; i < dgv_Datos.Columns.Count; i++)
+            {
                 CreaTextBox(dgv_Datos.Columns[i].Name, ref aux);
+
+                if (!dgv_Datos.Columns[i].Visible)
+                    i++;
+            }
         }
 
+        /**
+         * Crea un textbox y lo coloca en la posición especificada.
+         */
         private void CreaTextBox(string nomCol, ref Point punto)
         {
             var textBox = new BunifuMaterialTextbox()
@@ -73,6 +107,10 @@ namespace Restaruante
             punto.Y += 35;
         }
 
+        /**
+         * Carga el modelo que se está empleando y llena el DGV de
+         * datos.
+         */
         private void CargaModelo(Modelo modelo)
         {
             LimpiaControles();
@@ -81,12 +119,15 @@ namespace Restaruante
             Controlador.ModeloActual = modelo;
             dgv_Datos.DataSource = Controlador.TablaDeDatos();
 
-            foreach (var columna in Controlador.ModeloActual.Ocultas)
+            foreach (string columna in Controlador.ModeloActual.Ocultas)
                 dgv_Datos.Columns[columna].Visible = false;
 
             LlenaControles();
         }
 
+        /**
+         * Maximiza la ventana
+         */
         private void Maximizar_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Maximized;
@@ -94,13 +135,19 @@ namespace Restaruante
             Restaurar.Visible = true;
         }
 
+
+        /**
+         * Minimiza el formulario.
+         */
         private void Minimizar_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
 
+        // Cierra el formulario.
         private void Cerrar_Click(object sender, EventArgs e) => Close();
 
+        // Restaura el formulario
         private void Restaurar_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Normal;
@@ -122,6 +169,9 @@ namespace Restaruante
             if (mov) SetDesktopLocation(MousePosition.X - movX, MousePosition.Y - movY);
         }
 
+        /**
+         * Anima el formulario.
+         */
         private void btn_Menu_Click(object sender, EventArgs e)
         {
             if (Menu.Width == 227)
@@ -163,6 +213,9 @@ namespace Restaruante
 
         private void btn_zona_Click(object sender, EventArgs e) => CargaModelo(new ZonaDomicilio());
 
+        /** 
+         * Llena los textbox con los datos de la tupla seleccionada.
+         */
         private void dgv_Datos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -181,6 +234,10 @@ namespace Restaruante
                 MessageBox.Show("Solo una celda");
             }
         }
+
+        /** 
+         * Agrega una nueva tupla con los datos proporcionados en los textbox.
+         */
         private void BotonAgregar_Click(object sender, EventArgs e)
         {
             try
@@ -195,6 +252,9 @@ namespace Restaruante
             }
         }
 
+        /**
+         * Modifica una tupla existente con los datos proporcionados en los textbox.
+         */
         private void BotonModificar_Click(object sender, EventArgs e)
         {
             if (dgv_Datos.CurrentCellAddress.Y == -1)
@@ -215,6 +275,9 @@ namespace Restaruante
             }
         }
 
+        /**
+         * Elimina la tupla seleccionada.
+         */
         private void BotonEliminar_Click(object sender, EventArgs e)
         {
             if (dgv_Datos.CurrentCellAddress.Y == -1)
